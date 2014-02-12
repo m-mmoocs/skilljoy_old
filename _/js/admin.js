@@ -1,0 +1,8 @@
+/* 
+ * Administration global js
+ */
+
+
+$(function(){
+    
+});

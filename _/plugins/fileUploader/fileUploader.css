@@ -1,0 +1,21 @@
+
+/* 
+    Document   : fileUploader
+    Created on : 30-Nov-2013, 11:47:25 PM
+    Author     : smrkem
+    Description:
+        For admin pages using twitter bootstrap 2.3.2
+*/
+.fUploadBox {margin: 10px 0;
+border: 1px solid #aaa;
+padding: 20px; overflow: hidden; }
+
+.fuCol1, .fuCol2 { float: left; width: 40%; }
+.fuCol1 { margin-right: 10px; }
+.img-attribs input[type="text"]{ width: 80%; }
+.fUploadedImage { display: block; max-width: 250px; height: auto; }
+.fUploadErrors { color: #a33; }
+.ajax-loader { background: url(../images/ajax-loader.gif); height: 25px; width: 25px; }
+
+.ajax-loader-preloader { text-indent: -999px; }
+.ajax-loader-preloader .ajax-loader{ display: inline-block; }
