@@ -10,7 +10,7 @@ class Users extends MY_Controller{
             $this->load->library('Fbconnect');	
             $this->load->library('Gconnect');
             // get login urls
-            $fb_url = $this->fbconnect->getLoginUrl(array('redirect_uri' => 'http://localhost/mmoocs/users/fb_login','scope' => 'email'));
+            $fb_url = $this->fbconnect->getLoginUrl(array('redirect_uri' => 'http://localhost/skilljoy/users/fb_login','scope' => 'email'));
             $g_url = $this->gconnect->createAuthUrl();
             $page = new Page('login');
             $page->Data('fb_url',$fb_url);
@@ -24,7 +24,7 @@ class Users extends MY_Controller{
             if($this->fbconnect->getUser()){
                 // get user info
                 $user_profile = $this->fbconnect->api('/me','GET');
-                $this->m_user->login_fb($user_profile);
+                $this->user->login_fb($user_profile);
                 header('Location:'.base_url());
                 exit();
             }else{
@@ -38,7 +38,7 @@ class Users extends MY_Controller{
                 $this->gconnect->authenticate();
                 // get user info	
                 $user_profile = $this->gconnect->oauth2->userinfo->get();
-                $this->m_user->login_g($user_profile);
+                $this->user->login_g($user_profile);
                 header('Location:'.base_url());
                 exit();
             }else{

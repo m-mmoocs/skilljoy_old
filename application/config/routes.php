@@ -37,12 +37,8 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
-$route['default_controller'] = "welcome";
-$route['404_override'] = '';
-
-//$route['default_controller'] = "home";
-//$route['404_override'] = 'error404';
+$route['default_controller'] = "home";
+$route['404_override'] = 'error404';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

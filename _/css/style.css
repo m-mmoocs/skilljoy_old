@@ -43,11 +43,23 @@ body, select, input, textarea {color: #000;}
 .hidden { display:none; }
 .centered { text-align: center; }
 .floatRight {float: right; }
+.floatLeft {float: left; }
+
+
+
+
+
 
 
 		/*	SITEWIDE STYLES    */
 
-
+header {padding: 50px; overflow: hidden; }
+#site-logo { text-decoration: none; font-size: 36px; }
+                
+                
+                
+                
+                
 /* Media queries!
 
 -------------------------------------------------------------------------------*/
