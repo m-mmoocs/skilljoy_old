@@ -4,7 +4,7 @@ class Admin extends MY_Controller{
 
 	public function index(){
             
-            if($this->m_user && $this->m_user->status()=='active'){
+            if($this->user && $this->user->status()=='active'){
                 $page = new Page('admin');
                 $page->content('admin/admin-v');
                 $page->scripts('admin');

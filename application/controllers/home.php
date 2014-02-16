@@ -4,8 +4,8 @@
 class Home extends MY_Controller{
 
 	public function index(){
-		$page = new Page('home');
-		$page->show();
+            $page = new Page('home');
+            $page->show();
 	}
 	
 }

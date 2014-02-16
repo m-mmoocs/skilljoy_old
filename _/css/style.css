@@ -53,6 +53,7 @@ body, select, input, textarea {color: #000;}
 
 		/*	SITEWIDE STYLES    */
 
+#content { padding: 0px 50px; }
 header {padding: 50px; overflow: hidden; }
 #site-logo { text-decoration: none; font-size: 36px; }
                 
