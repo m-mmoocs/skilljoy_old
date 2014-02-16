@@ -7,7 +7,20 @@ class Materials_m extends MY_Model{
 	function __construct(){
 		parent::__construct();
 	}
-	
+        
+	public function get_materials_with_unit_id($id){
+            $sql = "SELECT * FROM materials WHERE unit_id = ? AND deleted_at IS NULL";
+            $q = $this->db->query($sql,$id);
+            $q = $q->result();
+            return $q;
+        } // end get_materials_with_unit_id
+        
+        public function get_content_types(){
+            $sql = "SELECT * FROM content_types";
+            $q = $this->db->query($sql);
+            return $q->result();
+        }
+        
         public function add_material($arr){
             $args = array();
             $field_names = "";

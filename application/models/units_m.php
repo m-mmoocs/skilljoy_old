@@ -7,6 +7,46 @@ class Units_m extends MY_Model{
 	function __construct(){
 		parent::__construct();
 	}
+
+        public function get_all_units(){
+            $sql = "SELECT * FROM units WHERE deleted_at IS NULL";
+            $q = $this->db->query($sql);
+            return $q->result();
+        }
+        
+        public function get_unit_with_id($id){
+            $sql = "SELECT * FROM units WHERE id = ? AND deleted_at IS NULL";
+            $q = $this->db->query($sql,$id);
+            if($q->num_rows == 1){
+                $q = $q->result();
+                $unit = $q[0];
+                $this->load->model('materials_m');
+                $unit->materials = $this->materials_m->get_materials_with_unit_id($unit->id);
+                return $unit;
+            }
+            else return FALSE;
+        } // end get_unit_with_id
+        
+        public function save_unit($arr){
+            $unit = array(
+                'user_id' => 23,
+                'title' => $arr['title'],
+                'description' => $arr['description'],
+            );
+            $unit_id = $this->add_unit($unit);
+            
+            foreach($arr['materials'] as $material){
+                if(!empty($material['content'])){
+                    $material = array(
+                        'unit_id' => $unit_id,
+                        'title' => $material['title'],
+                        'content' => $material['content'],
+                        'content_type' => $material['content_type']
+                    );
+                    $this->materials_m->add_material($material);
+                }
+            }
+        } // end save_unit
         
         public function add_unit($arr){
             $args = array();
