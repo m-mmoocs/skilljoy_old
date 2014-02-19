@@ -29,7 +29,7 @@ class Units_m extends MY_Model{
         
         public function save_unit($arr){
             $unit = array(
-                'user_id' => 23,
+                'user_id' => $this->user->Data('id'),
                 'title' => $arr['title'],
                 'description' => $arr['description'],
             );

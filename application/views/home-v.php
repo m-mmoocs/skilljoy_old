@@ -7,4 +7,9 @@
 <?php endforeach; ?>
 
 <br>
-<a href="<?php echo base_url('units/save_unit'); ?>" >Add Unit</a>
+
+<?php if($this->user && $this->user->status()==='active'): ?>
+    <a href="<?php echo base_url('units/save_unit'); ?>" >Add Unit</a>
+<?php endif; ?>
+
+    
