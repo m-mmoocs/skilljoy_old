@@ -15,10 +15,14 @@ class Units extends MY_Controller{
 	}
         
         public function save_unit(){
+            if(!$this->user || $this->user->status()!=='active'){
+                header("Location:".base_url());
+                exit();
+            }
             $this->load->model('units_m');
             $this->load->model('materials_m');
+            
             if(isset($_POST['add_unit'])){
-//                $this->smrke->debug($_POST);
                 $this->units_m->save_unit($_POST);
                 header('Location:'.base_url());
                 exit();
