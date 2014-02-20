@@ -21,6 +21,7 @@ class Units extends MY_Controller{
             }
             $this->load->model('units_m');
             $this->load->model('materials_m');
+            
             if(isset($_POST['add_unit'])){
                 $this->units_m->save_unit($_POST);
                 header('Location:'.base_url());
