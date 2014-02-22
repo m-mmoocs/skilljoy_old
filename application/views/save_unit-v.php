@@ -12,20 +12,16 @@
     
     
     <table>
-        <tr><td>Title</td><td>Content</td><td>Type</td></tr>
-        <tr><td><input type="text" name="materials[0][title]" ></td><td><input type="text" name="materials[0][content]" ></td>
-                    <td><select name="materials[0][content_type]">
-                <?php foreach($content_types as $t) echo '<option value="'.$t->id.'">'.$t->name.'</option>'; ?>
-                </select></td>
+        <tr><td>Title</td><td>Content</td></tr>
+        <tr><td><input type="text" name="materials[0][title]" ></td>
+            <td><input type="text" name="materials[0][content]" ></td>
         </tr>
-        <tr><td><input type="text" name="materials[1][title]" ></td><td><input type="text" name="materials[1][content]" ></td>
-                <td><select name="materials[1][content_type]">
-                <?php foreach($content_types as $t) echo '<option value="'.$t->id.'">'.$t->name.'</option>'; ?>
-                </select></td></tr>
-        <tr><td><input type="text" name="materials[2][title]" ></td><td><input type="text" name="materials[2][content]" ></td>
-            <td><select name="materials[2][content_type]">
-                <?php foreach($content_types as $t) echo '<option value="'.$t->id.'">'.$t->name.'</option>'; ?>
-                </select></td></tr>
+        <tr><td><input type="text" name="materials[1][title]" ></td>
+            <td><input type="text" name="materials[1][content]" ></td>
+        </tr>
+        <tr><td><input type="text" name="materials[2][title]" ></td>
+            <td><input type="text" name="materials[2][content]" ></td>
+        </tr>
     </table>
     <br><br>
     <input type="submit" name="add_unit" value="Save">

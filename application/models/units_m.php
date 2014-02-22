@@ -37,13 +37,18 @@ class Units_m extends MY_Model{
             
             foreach($arr['materials'] as $material){
                 if(!empty($material['content'])){
-                    $material = array(
-                        'unit_id' => $unit_id,
-                        'title' => $material['title'],
-                        'content' => $material['content'],
-                        'content_type' => $material['content_type']
+                    $this->load->library('mui');
+                    $result = $this->mui->material_check($material['content']); // put the content through trimmer/checker
+                    if ($result['content_type'] != '0')     // if the material is valid
+                    {
+                        $material = array(
+                            'unit_id' => $unit_id,
+                            'title' => $material['title'],
+                            'content' => $result['content'],    // insert trimmed content or url here
+                            'content_type' => $result['content_type']   // insert the content_type id
                     );
                     $this->materials_m->add_material($material);
+                    }
                 }
             }
         } // end save_unit

@@ -10,28 +10,33 @@ class Mui{
 
      function material_check($input)
      {
-         // check if URL is a youtube link
-         if ($output = $this->is_valid_youtube($input))
-         {
-                 return array('content'=>$output, 'content_type'=>1);
-         }
-         if ($this->valid_url($this->is_valid_pdf($input)))
+         $output = array();
+         if ($this->valid_url($this->is_valid_pdf($input))) // does true/false url test, then tests if it ends in pdf
          {
              return array('content'=>$input, 'content_type'=>2);
          }
-         if ($output = $this->is_valid_vimeo($input))
+         // finally simply check if it is a valid url and leave it as is
+         else if ($output = $this->is_valid_youtube($input))    // returns extracted video code
+         {
+             
+                 return array('content'=>$output, 'content_type'=>1);
+         }
+         else if ($output = $this->is_valid_vimeo($input))  // returns extracted video code
          {
                  return array('content'=>$output, 'content_type'=>3);
          }
-         // finally simply check if it is a valid url and leave it as is
-         if ($this->valid_url($input))
+         else if ($this->valid_url($input)) // true/false test, passes on url if it's a valid type
          {
-             return array('content'=>$input, 'content_type'=>4);;
+             return array('content'=>$input, 'content_type'=>4);
+         }
+         else // assuming no match was found
+         {      // using this to check if material type can be added
+             return array('content_type' =>0);
          }
      }
 	
 
-     // --- Function to test for youtube link and return only the video id ---
+     // --- Functions for testing various formats ---
      function is_valid_youtube($input)
      {
         $pattern = '#^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/embed/|/v/|/watch\?v=|/watch\?.+&v=))([\w-]{11})(?:.+)?$#x';
@@ -41,7 +46,8 @@ class Mui{
      
      function is_valid_pdf($input)
      {
-        if (preg_match('/\.pdf$/', $input))
+         $url = parse_url($input);
+        if (preg_match('/\.pdf$/', $url['path']))
         {            
             return $input;
         }
@@ -53,18 +59,24 @@ class Mui{
      
      function is_valid_vimeo($input)
      {
+         if (stripos($input, 'vimeo'))
+         {
         $result = array();
         preg_match('/(\d+)/', $input, $result);
         return (isset($result[1])) ? $result[1] : false;
+         }
      }
      
      function valid_url($input)
      {
-       $pattern = "/(((http|ftp|https):\/\/){1}([a-zA-Z0-9_-]+)(\.[a-zA-Z0-9_-]+)+([\S,:\/\.\?=a-zA-Z0-9_-]+))igs/";
-        if (preg_match($pattern, $input))
+        $url = $input;
+        if (preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url)) 
         {
             return TRUE;
         }
-        return FALSE;
+        else 
+        {
+            return FALSE;
+        }
      }
  }
