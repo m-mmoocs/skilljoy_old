@@ -32,6 +32,5 @@
     </table>
     <br><br>
     <input type="submit" name="add_unit" value="Save">
-    <?php
-    $this->smrke->debug($_POST);?>
+
 </form>
