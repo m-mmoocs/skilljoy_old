@@ -6,24 +6,30 @@
 <p  class="unit-description"><?php echo ucfirst($unit->description); ?></p>
 <hr>
 <div class="unit-materials">
+    
     <?php foreach($unit->materials as $m): ?>
   
  
-    <?php   if ($m->content_type == 1) // -------- if it's a youtube video id
+    <?php   
+            $this->load->model('materials_m');
+            $url = $this->materials_m->get_materials_with_id($m->id);
+            $url = $url[0];
+            
+            if ($m->content_type == 1) // -------- if it's a youtube video id
             {
-                $this->load->view('materials/youtube-v', $m->id);
+                $this->load->view('materials/youtube-v', $url);
             }
             elseif ($m->content_type == 2) // -------- if it's a pdf URL
             {
-                $this->load->view('materials/pdf-v', $m->id);
+                $this->load->view('materials/pdf-v', $url);
             }
             elseif ($m->content_type == 3) // -------- if it's a vimeo URL
             {
-                $this->load->view('materials/vimeo-v', $m->id);
+                $this->load->view('materials/vimeo-v', $url);
             }
             else 
                 echo '<a target="_blank" href="'. $this->load->helper('url') . prep_url($m->content). '>' ?>
-                    </a><br />
+            </a><br />
   
 
 
