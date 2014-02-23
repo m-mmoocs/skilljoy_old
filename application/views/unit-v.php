@@ -7,7 +7,28 @@
 <hr>
 <div class="unit-materials">
     <?php foreach($unit->materials as $m): ?>
-    <?php if ($m->content_type == 4) :          // if this is a webpage, then just insert URL?>
+  
+ 
+    <?php   if ($m->content_type == 1) // -------- if it's a youtube video id
+            {
+                $this->load->view('materials/youtube-v', $m->id);
+            }
+            elseif ($m->content_type == 2) // -------- if it's a pdf URL
+            {
+                $this->load->view('materials/pdf-v', $m->id);
+            }
+            elseif ($m->content_type == 3) // -------- if it's a vimeo URL
+            {
+                $this->load->view('materials/vimeo-v', $m->id);
+            }
+            else 
+                echo '<a target="_blank" href="'. $this->load->helper('url') . prep_url($m->content). '>' ?>
+                    </a><br />
+  
+
+
+<!-- pdf/videos will pop up in another screen if clicked on the link-->
+  <?php if ($m->content_type == 4) :          // if this is a webpage, then just insert URL?>
     <a target="_blank" href="<?php $this->load->helper('url'); echo prep_url($m->content); ?>">
     <?php else:                                 // otherwise send to controller to check which view to use?>
     <a target="_blank" href="<?php echo base_url('content/show/'.$m->id); ?>">
