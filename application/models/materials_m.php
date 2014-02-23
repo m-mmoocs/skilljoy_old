@@ -15,6 +15,13 @@ class Materials_m extends MY_Model{
             return $q;
         } // end get_materials_with_unit_id
         
+        public function get_materials_with_id($id){ // used to retrieve material's details based on material id
+            $sql = "SELECT * FROM materials WHERE id = ? AND deleted_at IS NULL";
+            $q = $this->db->query($sql,$id);
+            $q = $q->result();
+            return $q;
+        } // end get_materials_with_unit_id
+        
         public function get_content_types(){
             $sql = "SELECT * FROM content_types";
             $q = $this->db->query($sql);
