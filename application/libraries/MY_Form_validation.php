@@ -5,21 +5,77 @@ class MY_Form_validation extends CI_Form_validation {
     public function error_array() {
         return $this->_error_array;
     }
+    
+    function valid_content($input) {
+        if ($this->is_valid_url($input)) {      // check if this is a real URL
+            if ($this->is_valid_pdf($input)) {  // then tests if it ends in pdf
+                return TRUE;
+            } else if ($this->is_valid_vimeo($input)) {  // tests if it's a valid Vimeo
+                return TRUE;
+            } else {
+                return TRUE;                    // since it passed real URL, it should pass this
+            }
+        } else if ($this->is_valid_youtube($input)) {    // returns extracted video code if it's valid youtube
+            return TRUE;
+        } else { // assuming no match was found
+            return FALSE;
+        }
+    }
 
-    function valid_url($url)
+    function is_valid_url($url)
     {
-        $pattern = "/^((ht|f)tp(s?)\:\/\/|~/|/)?([w]{2}([\w\-]+\.)+([\w]{2,5}))(:[\d]{1,5})?/";
+        $pattern = "/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i";
         if (!preg_match($pattern, $url))
         {
             return FALSE;
         }
-
-        return TRUE;
+        else {return TRUE;}
+        
     }
+    
+    function is_valid_youtube($input) {
+        $pattern = '#^(?:https?://)?(?:www\.)?(?:youtu\.be/|youtube\.com(?:/embed/|/v/|/watch\?v=|/watch\?.+&v=))([\w-]{11})(?:.+)?$#x';
+        if( preg_match($pattern, $input))
+        {
+            return TRUE;
+        }
+        else {return FALSE;}
+        }
+
+    function is_valid_pdf($input) {
+        $url = parse_url($input);
+        if ( isset($url['path'])) // bypass preg_match if path doesn't seem to be valid
+        {
+            if (preg_match('/\.pdf$/', $url['path'])) {
+                return TRUE;
+            } else {
+                return false;
+            }
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    function is_valid_vimeo($input) {
+        $pattern = '#(http://vimeo.com)/([0-9]+)#i';
+        if( preg_match($pattern, $input))
+        {
+            return TRUE;
+        }
+ else {return FALSE;}
+        }
+    
     
     function real_url($url)
     {
-        return @fsockopen("$url", 80, $errno, $errstr, 30);
+        $url_data = parse_url($url); // scheme, host, port, path, query
+        if (!@fsockopen($url_data['host'], isset($url_data['port']) ? $url_data['port'] : 80)) {
+            return FALSE;
+        }               
+         
+        return TRUE;
     } 
     
     function set_error($field, $message)

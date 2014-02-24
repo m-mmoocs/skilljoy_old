@@ -42,7 +42,7 @@ class Materials_m extends MY_Model{
             $field_names.='created_by';
             $args[] = ip2long($_SERVER['REMOTE_ADDR']);
             $values .= "?,?";
-         
+
             $sql = "INSERT INTO materials ($field_names) VALUES ($values)";
             if($this->db->query($sql,$args)){
                 // return newly created user id

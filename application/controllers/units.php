@@ -42,7 +42,29 @@ class Units extends MY_Controller{
             $this->load->library('form_validation');
             $this->load->library('mui');
             $flag = FALSE;  // this is to ensure at least one of the content types filled in are valid
+            $this->fix_url();   // add http:// to content if it hasn't already been added
+            $validation_str1 = '';
+            $validation_str2 = '';
+            if ( strlen($_POST['materials'][0]['content']) > 5 )
+            {
+                if ( strlen($_POST['materials'][1]['content']) > 5 )
+                {
+                    $validation_str1 = 'xss_clean|is_valid_url|valid_content|real_url';
+                }
+                if ( strlen($_POST['materials'][2]['content']) > 5 )
+                {
+                    $validation_str2 = 'xss_clean|is_valid_url|valid_content|real_url';
+                }
+            }
+            // setting up validation rules
             $this->form_validation->set_rules('title', 'Unit Title', 'required|xss_clean');
+            $this->form_validation->set_rules('materials[0][content]', 'Primary Material', 'required|xss_clean|is_valid_url|valid_content|real_url');
+            $this->form_validation->set_rules('materials[1][content]', 'Supporting Material 1', $validation_str1);
+            $this->form_validation->set_rules('materials[2][content]', 'Supporting Material 2', $validation_str2);
+            $this->form_validation->set_message('is_valid_url', 'Invalid URL format.');
+            $this->form_validation->set_message('valid_content', 'Invalid Content.');
+            $this->form_validation->set_message('real_url', 'URL is not accessible.');
+            
             if ($this->form_validation->run() == TRUE) {    // if the title field was indeed filled in
                 foreach ($_POST['materials'] as $mat) {     // loop through the material fields
                     if (strlen($mat['content']) > 0) {      // if something had been entered in the field
@@ -58,6 +80,20 @@ class Units extends MY_Controller{
             } else {
                 return FALSE;
             }
+    }
+    
+    
+    public function fix_url()
+    {
+        if (strlen($_POST['materials'][0]['content']) > 5) {
+            $_POST['materials'][0]['content'] = prep_url($_POST['materials'][0]['content']);
+        }
+        if (strlen($_POST['materials'][1]['content']) > 5) {
+            $_POST['materials'][1]['content'] = prep_url($_POST['materials'][1]['content']);
+        }
+        if (strlen($_POST['materials'][2]['content']) > 5) {
+            $_POST['materials'][2]['content'] = prep_url($_POST['materials'][2]['content']);
+        }
     }
     
     public function show_link($id){
@@ -76,9 +112,5 @@ class Units extends MY_Controller{
             {
                 $this->load->view('materials/vimeo-v', $result);
             }
-            // --- Note: URLs are being handled by the unit-v page to get around 
-            // codeigniter's check for questionable characters in URI strings
-            // unit-v will make href="http:// link rather than direct to controller
-            // if a web page was requested
 	}
 }

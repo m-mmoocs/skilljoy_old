@@ -45,7 +45,8 @@ class Units_m extends MY_Model{
                             'unit_id' => $unit_id,
                             'title' => $material['title'],
                             'content' => $result['content'],    // insert trimmed content or url here
-                            'content_type' => $result['content_type']   // insert the content_type id
+                            'content_type' => $result['content_type'],   // insert the content_type id
+                            'primary_mat' => $material['primary_mat']    
                     );
                     $this->materials_m->add_material($material);
                     }

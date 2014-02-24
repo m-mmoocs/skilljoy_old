@@ -16,18 +16,12 @@ class Mui {
                 return array('content' => $input, 'content_type' => 2);
             } else if ($output = $this->is_valid_vimeo($input)) {  // checks if it's a valid vimeo format
                 return array('content' => $output, 'content_type' => 3);
-            }
-            else
-            {
+            } else if ($output = $this->is_valid_youtube($input)) {    // returns extracted video code if it's valid youtube
+                return array('content' => $output, 'content_type' => 1);
+            } else {
                 return array('content' => $input, 'content_type' => 4);
             }
-        }
-        else if ($output = $this->is_valid_youtube($input)) 
-        {    // returns extracted video code if it's valid youtube
-            return array('content' => $output, 'content_type' => 1);
-        } 
-        else 
-        { // assuming no match was found      // using this to check if material type can be added
+        } else { // assuming no match was found      // using this to check if material type can be added
             return array('content_type' => 0);
         }
     }
