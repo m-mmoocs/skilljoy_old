@@ -47,8 +47,6 @@
                 else 
                     echo '<a target="_blank" href="'. $this->load->helper('url') . prep_url($s->content). '>';
                 echo ' </a><br /><br />';
-                } ?>
-           
-    <?php // endforeach; ?>
-   
+                }
+     ?> 
 </div>
