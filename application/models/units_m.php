@@ -31,25 +31,18 @@ class Units_m extends MY_Model{
             $unit = array(
                 'user_id' => $this->user->Data('id'),
                 'title' => $arr['title'],
-                'description' => $arr['description'],
-            );
+                'description' => $arr['description'] );
+            $this->smrke->debug($arr);
             $unit_id = $this->add_unit($unit);
-            
             foreach($arr['materials'] as $material){
-                if(!empty($material['content'])){
-                    $this->load->library('mui');
-                    $result = $this->mui->material_check($material['content']); // put the content through trimmer/checker
-                    if ($result['content_type'] != '0')     // if the material is valid
-                    {
+                if( strlen($material['content']) > 5 ){ // string length check is needed or it tries to load content of empty field
                         $material = array(
                             'unit_id' => $unit_id,
                             'title' => $material['title'],
-                            'content' => $result['content'],    // insert trimmed content or url here
-                            'content_type' => $result['content_type'],   // insert the content_type id
-                            'primary_mat' => $material['primary_mat']    
-                    );
+                            'content' => $material['content'],    // insert trimmed content or url here
+                            'content_type' => $material['content_type'],   // insert the content_type id
+                            'primary_mat' => $material['primary_mat'] );
                     $this->materials_m->add_material($material);
-                    }
                 }
             }
         } // end save_unit
