@@ -23,7 +23,7 @@ class Units_m extends MY_Model{
                 $this->load->model('materials_m');
                 $unit->materials = $this->materials_m->get_materials_with_unit_id($unit->id);
                 $unit->primary_material = $this->materials_m->get_primary_materials_with_unit_id($unit->id);
-                $unit->secondary_materials = $this->materials_m->get_secondary_materials_with_unit_id($unit->id);
+                $unit->secondary_material = $this->materials_m->get_secondary_materials_with_unit_id($unit->id);
                 return $unit;
             }
             else return FALSE;
