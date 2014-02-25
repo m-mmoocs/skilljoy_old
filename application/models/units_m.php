@@ -22,10 +22,13 @@ class Units_m extends MY_Model{
                 $unit = $q[0];
                 $this->load->model('materials_m');
                 $unit->materials = $this->materials_m->get_materials_with_unit_id($unit->id);
+                $unit->primary_material = $this->materials_m->get_primary_materials_with_unit_id($unit->id);
+                $unit->secondary_materials = $this->materials_m->get_secondary_materials_with_unit_id($unit->id);
                 return $unit;
             }
             else return FALSE;
         } // end get_unit_with_id
+       
         
         public function save_unit($arr){
             $unit = array(

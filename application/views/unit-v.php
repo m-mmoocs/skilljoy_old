@@ -6,7 +6,29 @@
 <p  class="unit-description"><?php echo ucfirst($unit->description); ?></p>
 <hr>
 <div class="unit-materials">
-    <!-- only shows primary materials -->
+    
+   <!-- only shows primary materials --> 
+    <?php foreach($unit->primary_material as $p)
+    {
+                if ($p->content_type == 1) // -------- if it's a youtube video id
+                {
+                    $this->load->view('materials/youtube-v', $p);
+                }
+                elseif ($p->content_type == 2) // -------- if it's a pdf URL
+                {
+                    $this->load->view('materials/pdf-v', $p);
+                }
+                elseif ($p->content_type == 3) // -------- if it's a vimeo URL
+                {
+                    $this->load->view('materials/vimeo-v', $p);
+                }
+                else 
+                    echo '<a target="_blank" href="'. $this->load->helper('url') . prep_url($p->content). '>';
+                
+    }
+     ?>
+    
+   <!-- Have to fix this part for loading secondary materials after lunch -->
     <?php foreach($unit->materials as $m): ?>
     <?php   
             if($m->primary_mat == 1)
@@ -14,7 +36,7 @@
                 $this->load->model('materials_m');
                 $url = $this->materials_m->get_materials_with_id($m->id);
                 $url = $url[0];
-
+                
                 //$this->smrke->debug($url);
                 
                 if ($m->content_type == 1) // -------- if it's a youtube video id
