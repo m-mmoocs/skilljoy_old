@@ -12,10 +12,8 @@
     <p>Materials:</p>
     <?php if (isset($_POST['add_unit'])) echo form_error('materials');?>
     <table>
-        <tr>Primary Material</tr>
-        <tr><td>Title</td><td>Content (Required)</td></tr>
-        <tr><td><input type="text" name="materials[0][title]" 
-           value="<?php if (isset($_POST['materials'][0]['title'])) echo ($_POST['materials'][0]['title']); ?>"></td>
+        <tr><td> Primary Content (Required)</td></tr>
+        <tr>
             <td><input type="text" name="materials[0][content]" 
            value="<?php if (isset($_POST['materials'][0]['content'])) echo ($_POST['materials'][0]['content']); ?>"></td>
         <input type="hidden" name="materials[0][primary_mat]" value="1">
@@ -24,18 +22,13 @@
     </table>
     <br><br>
     <table>
-        <tr>Supporting Materials</tr>
-        <tr><td>Title</td><td>Content (Optional)</td></tr>
-        <tr><td><input type="text" name="materials[1][title]" 
-           value="<?php if (isset($_POST['materials'][1]['title'])) echo ($_POST['materials'][1]['title']); ?>"></td>
-            <td><input type="text" name="materials[1][content]" 
+        <tr><td>Supporting Content (Optional)</td></tr>
+        <tr><td><input type="text" name="materials[1][content]" 
            value="<?php if (isset($_POST['materials'][1]['content'])) echo ($_POST['materials'][1]['content']); ?>"></td>
             <td><?php if (isset($_POST['add_unit'])) echo form_error('materials[1][content]');?></td>
             <input type="hidden" name="materials[1][primary_mat]" value="0">
         </tr>
-        <tr><td><input type="text" name="materials[2][title]" 
-           value = "<?php if (isset($_POST['materials'][2]['title'])) echo ($_POST['materials'][2]['title']); ?>"></td>
-            <td><input type="text" name="materials[2][content]" 
+        <tr><td><input type="text" name="materials[2][content]" 
            value = "<?php if (isset($_POST['materials'][2]['content'])) echo ($_POST['materials'][2]['content']); ?>"></td>
             <td><?php if (isset($_POST['add_unit'])) echo form_error('materials[2][content]');?></td>
             <input type="hidden" name="materials[2][primary_mat]" value="0">

@@ -35,13 +35,11 @@ class Units_m extends MY_Model{
                 'user_id' => $this->user->Data('id'),
                 'title' => $arr['title'],
                 'description' => $arr['description'] );
-            $this->smrke->debug($arr);
             $unit_id = $this->add_unit($unit);
             foreach($arr['materials'] as $material){
                 if( strlen($material['content']) > 5 ){ // string length check is needed or it tries to load content of empty field
                         $material = array(
                             'unit_id' => $unit_id,
-                            'title' => $material['title'],
                             'content' => $material['content'],    // insert trimmed content or url here
                             'content_type' => $material['content_type'],   // insert the content_type id
                             'primary_mat' => $material['primary_mat'] );

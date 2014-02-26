@@ -45,7 +45,7 @@ class Mui {
     function is_valid_vimeo($input) {
         $pattern = '#(http://vimeo.com)/([0-9]+)#i';
         preg_match($pattern, $input, $result);
-        return (isset($result[1])) ? $result[1] : false;
+        return (isset($result[2])) ? $result[2] : false;
     }
 
     function valid_url($input) {
