@@ -22,8 +22,7 @@
                 {
                     $this->load->view('materials/vimeo-v', $p);
                 }
-                else 
-                    echo '<a target="_blank" href="'. $this->load->helper('url') . prep_url($p->content). '>'; 
+                
                 echo '<br /><br />';
     }    
     ?>
@@ -45,7 +44,7 @@
                     $this->load->view('materials/vimeo-v', $s);
                 }
                 else 
-                    echo '<a target="_blank" href="'. $this->load->helper('url') . prep_url($s->content). '>';
+                    echo '<a target="_blank" href="'.$s->content.'">'.$s->title;
                 echo ' </a><br /><br />';
                 }
      ?> 
