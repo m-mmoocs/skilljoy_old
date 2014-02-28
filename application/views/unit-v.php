@@ -44,7 +44,7 @@
                     $this->load->view('materials/vimeo-v', $s);
                 }
                 else 
-                    echo '<a target="_blank" href="'.$s->content.'">'.$s->title;
+                    echo '<a target="_blank" href="'.$s->content.'">'.$s->content;
                 echo ' </a><br /><br />';
                 }
      ?> 

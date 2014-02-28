@@ -11,7 +11,7 @@ class Mui {
 
     function material_check($input) {
         $output = array();
-        if ($this->valid_url($input)) { // does true/false url test, 
+        if ($this->is_valid_url($input)) { // does true/false url test, 
             if ($this->is_valid_pdf($input)) {  // then tests if it ends in pdf
                 return array('content' => $input, 'content_type' => 2);
             } else if ($output = $this->is_valid_vimeo($input)) {  // checks if it's a valid vimeo format
@@ -19,7 +19,7 @@ class Mui {
             } else if ($output = $this->is_valid_youtube($input)) {    // returns extracted video code if it's valid youtube
                 return array('content' => $output, 'content_type' => 1);
             } else {
-                return array('content' => $input, 'content_type' => 4);
+                return array('content' => $input, 'content_type' => 4); // flag as URL, but not a recognized type
             }
         } else { // assuming no match was found      // using this to check if material type can be added
             return array('content_type' => 0);
@@ -35,8 +35,12 @@ class Mui {
 
     function is_valid_pdf($input) {
         $url = parse_url($input);
-        if (preg_match('/\.pdf$/', $url['path'])) {
-            return $input;
+        if ( isset($url['path']))   // check that the url contains a 'path' portion
+        {
+            if (preg_match('/\.pdf$/', $url['path'])) // look for pdf extension at the end
+                {
+                    return $input;  // send back the entire URL
+                }
         } else {
             return false;
         }
@@ -48,9 +52,9 @@ class Mui {
         return (isset($result[2])) ? $result[2] : false;
     }
 
-    function valid_url($input) {
+    function is_valid_url($input) {
         $url = $input;
-        if (preg_match("/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i", $url)) {
+        if (preg_match("/^(http|https):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i", $url)) {
             if (filter_var($url, FILTER_VALIDATE_URL)) {  // double checking by running through validation filter
                 return TRUE;
             } else {
